@@ -37,6 +37,7 @@ struct LandingAction     sLongJumpLandAction = {         6,               5,    
 struct LandingAction   sDoubleJumpLandAction = {         4,               5,      ACT_FREEFALL,   ACT_DOUBLE_JUMP_LAND_STOP,          ACT_JUMP,      ACT_FREEFALL,      ACT_BEGIN_SLIDING, };
 struct LandingAction   sTripleJumpLandAction = {         4,               0,      ACT_FREEFALL,   ACT_TRIPLE_JUMP_LAND_STOP, ACT_UNINITIALIZED,      ACT_FREEFALL,      ACT_BEGIN_SLIDING, };
 struct LandingAction     sBackflipLandAction = {         4,               0,      ACT_FREEFALL,      ACT_BACKFLIP_LAND_STOP,      ACT_BACKFLIP,      ACT_FREEFALL,      ACT_BEGIN_SLIDING, };
+struct LandingAction        sBoostLandAction = {         4,               5,      ACT_FREEFALL,         ACT_BOOST_LAND_STOP,   ACT_DOUBLE_JUMP,      ACT_FREEFALL,      ACT_BEGIN_SLIDING, };
 
 Mat4 sFloorAlignMatrix[2];
 
@@ -1947,6 +1948,17 @@ s32 check_common_moving_cancels(struct MarioState *m) {
     return FALSE;
 }
 
+/**
+ * Determines how Mario behaves when landing from a boost.
+ */
+u32 act_boost_land(struct MarioState *m) {
+	if (common_landing_cancels(m, &sBoostLandAction, set_jumping_action)) {
+        return TRUE;
+    }
+    common_landing_action(m, MARIO_ANIM_TRIPLE_JUMP_LAND, ACT_FREEFALL);
+    return FALSE;
+}
+
 s32 mario_execute_moving_action(struct MarioState *m) {
     s32 cancel = FALSE;
 
@@ -1998,6 +2010,7 @@ s32 mario_execute_moving_action(struct MarioState *m) {
         case ACT_QUICKSAND_JUMP_LAND:      cancel = act_quicksand_jump_land(m);      break;
         case ACT_HOLD_QUICKSAND_JUMP_LAND: cancel = act_hold_quicksand_jump_land(m); break;
         case ACT_LONG_JUMP_LAND:           cancel = act_long_jump_land(m);           break;
+		case ACT_BOOST_LAND:               cancel = act_boost_land(m);               break;
     }
     /* clang-format on */
 

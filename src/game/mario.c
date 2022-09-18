@@ -269,7 +269,8 @@ void adjust_sound_for_speed(struct MarioState *m) {
  * Spawns particles if the step sound says to, then either plays a step sound or relevant other sound.
  */
 void play_sound_and_spawn_particles(struct MarioState *m, u32 soundBits, u32 waveParticleType) {
-    if (m->terrainSoundAddend == (SOUND_TERRAIN_WATER << 16)) {
+	
+	if (m->terrainSoundAddend == (SOUND_TERRAIN_WATER << 16)) {
         if (waveParticleType != 0) {
             m->particleFlags |= PARTICLE_SHALLOW_WATER_SPLASH;
         } else {
@@ -280,7 +281,9 @@ void play_sound_and_spawn_particles(struct MarioState *m, u32 soundBits, u32 wav
             m->particleFlags |= PARTICLE_DIRT;
         } else if (m->terrainSoundAddend == (SOUND_TERRAIN_SNOW << 16)) {
             m->particleFlags |= PARTICLE_SNOW;
-        }
+        } else if (waveParticleType == PARTICLE_SPARKLES) {
+			m->particleFlags |= PARTICLE_SPARKLES;
+		}
     }
 
     if ((m->flags & MARIO_METAL_CAP) || soundBits == SOUND_ACTION_UNSTUCK_FROM_GROUND
@@ -842,6 +845,19 @@ u32 set_mario_action_airborne(struct MarioState *m, u32 action, u32 actionArg) {
         case ACT_JUMP_KICK:
             m->vel[1] = 20.0f;
             break;
+			
+		case ACT_AIR_BOOSTING:
+		    mario_set_forward_vel(m, 100.0f);
+			break;
+			
+		case ACT_BOOST_JUMP:
+		    set_mario_y_vel_based_on_fspeed(m, 52.0f, 0.25f);
+			break;
+			
+		case ACT_AIR_JUMP:
+		    set_mario_y_vel_based_on_fspeed(m, 42.0f, 0.25f);
+            m->forwardVel *= 0.7f;
+			break;
     }
 
     m->peakHeight = m->pos[1];

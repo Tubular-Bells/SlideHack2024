@@ -78,6 +78,11 @@ enum ActionArgsFreefall { // act_freefall
     ACT_ARG_FREEFALL_FROM_SLIDE_KICK
 };
 
+enum ActionStatesBoosting { // act_boost
+    ACT_STATE_FULL_BOOST,
+	ACT_STATE_BOOST_TAPER
+};
+
 s32 mario_execute_airborne_action(struct MarioState *m);
 
 #endif // MARIO_ACTIONS_AIRBORNE_H
