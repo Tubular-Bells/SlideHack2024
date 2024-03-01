@@ -6,35 +6,24 @@
 
 /**
  * Enables some mechanics that change behavior depending on hardcoded level numbers.
- * You may also need to change sLevelsWithRooms in object_helpers.c.
  * TODO: separate this into separate defines, behavior params, or make these mechanics otherwise dynamic.
 */
 // #define ENABLE_VANILLA_LEVEL_SPECIFIC_CHECKS
 
 /**
- * Disables lives and hides the lives counter.
+ * Enable lives and the lives counter. The number next to the define is the number of lives you start with.
  */
-#define DISABLE_LIVES
-
-/**
- * Saves the number of lives to the save file (Does nothing if DISABLE_LIVES is enabled).
- */
-#define SAVE_NUM_LIVES
-
-/**
- * This is the number of lives Mario starts with after a game over or starting the game for the first time (must be lower than 127).
- */
-#define DEFAULT_NUM_LIVES 4
+// #define ENABLE_LIVES 4
 
 /**
  * This can be 0..127.
  */
-#define MAX_NUM_LIVES   100
+#define MAX_NUM_LIVES 100
 
 /**
  * This can be 0..32767.
  */
-#define MAX_NUM_COINS   999
+#define MAX_NUM_COINS 999
 
 /**
  * Air/breath meter is separate from health meter when underwater.
@@ -82,7 +71,7 @@
 // #define DIALOG_INDICATOR
 
 /**
- * Include the English characters that were missing from US segment2
+ * Include the English characters that were missing from US segment2 and the rumble pak texture if using rumble.
  * J, Q, V, X, Z, ¨, !, !!, ?, &, %, ., and the beta key.
  * [MAKE SURE TO INCLUDE EU AND JP/SH BASEROMS IN THE REPO TO OBTAIN THE ASSETS]
  * If this is disabled, backup assets will be used.

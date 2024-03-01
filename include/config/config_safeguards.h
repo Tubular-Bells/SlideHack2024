@@ -75,21 +75,26 @@
 
 #ifdef DISABLE_ALL
     #undef DEBUG_ALL
+    #undef USE_PROFILER
     #undef TEST_LEVEL
     #undef DEBUG_LEVEL_SELECT
     #undef ENABLE_DEBUG_FREE_MOVE
-    #undef VANILLA_DEBUG
-    #undef VANILLA_STYLE_CUSTOM_DEBUG
     #undef PUPPYPRINT_DEBUG
     #undef PUPPYPRINT_DEBUG_CYCLES
+    #undef VANILLA_STYLE_CUSTOM_DEBUG
     #undef VISUAL_DEBUG
     #undef UNLOCK_ALL
     #undef COMPLETE_SAVE_FILE
+    #undef UNLOCK_FPS
+    #undef VANILLA_DEBUG
     #undef DEBUG_FORCE_CRASH_ON_BOOT
-    #undef USE_PROFILER
+    #undef DEBUG_ASSERTIONS
 #endif // DISABLE_ALL
 
 #ifdef DEBUG_ALL
+    #undef USE_PROFILER
+    #define USE_PROFILER
+
     #undef DEBUG_LEVEL_SELECT
     #define DEBUG_LEVEL_SELECT
 
@@ -100,7 +105,7 @@
     #define PUPPYPRINT
 
     #undef PUPPYPRINT_DEBUG
-    #define PUPPYPRINT_DEBUG 1
+    #define PUPPYPRINT_DEBUG
 
     #undef VISUAL_DEBUG
     #define VISUAL_DEBUG
@@ -110,6 +115,9 @@
 
     #undef COMPLETE_SAVE_FILE
     #define COMPLETE_SAVE_FILE
+
+    #undef DEBUG_ASSERTIONS
+    #define DEBUG_ASSERTIONS
 #endif // DEBUG_ALL
 
 #ifdef PUPPYPRINT_DEBUG
@@ -123,6 +131,11 @@
     #undef UNLOCK_ALL
     #define UNLOCK_ALL
 #endif // COMPLETE_SAVE_FILE
+
+#ifdef DEBUG
+    #undef DEBUG_ASSERTIONS
+    #define DEBUG_ASSERTIONS
+#endif // DEBUG
 
 
 /*****************
@@ -150,10 +163,6 @@
 /*****************
  * config_game.h
  */
-
-#ifdef DISABLE_LIVES
-    #undef SAVE_NUM_LIVES
-#endif // DISABLE_LIVES
 
 #ifndef START_LEVEL
     #define START_LEVEL LEVEL_CASTLE_GROUNDS
